@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Sudoku Solver</title>
+</head>
+
+<body>
+	<h1>Sudoku Solver</h1>
+	<form th:action="@{/solve}" method="post">
+		<textarea name="inputValues" rows="9" cols="21"></textarea>
+		<button type="submit">Solve</button>
+	</form>
+
+	<div th:if="${uniqueLink}">
+		<h2>Unique Link:</h2>
+		<p th:text="${uniqueLink}"></p>
+	</div>
+
+	<div th:if="${inputValues}" style="margin-top: 20px;">
+		<h2>Input Sudoku Puzzle</h2>
+		<table border="1">
+			<tbody th:each="row : ${inputValues}">
+				<tr>
+					<td th:each="cell, colStat : ${row}" th:text="${cell}"></td>
+					<td th:if="${colStat.index % 3 == 2}" style="border-right: 2px solid black;"></td>
+				</tr>
+				<tr th:if="${rowStat.index % 3 == 2}">
+					<td colspan="9" style="border-bottom: 2px solid black;"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

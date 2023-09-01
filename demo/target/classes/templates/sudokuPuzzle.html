@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku Puzzle</title>
+</head>
+<body>
+    <h1>Sudoku Puzzle</h1>
+    
+    <div th:if="${sudoku}">
+        <h2>Solve the Sudoku Puzzle</h2>
+        <table border="1">
+            <tbody th:each="row, rowStat : ${#strings.split(sudoku.inputValues, '\n')}">
+                <tr th:each="cell, colStat : ${#strings.split(row, ',')}">
+                    <td th:text="${cell}"></td>
+                    <th:if="${colStat.index % 3 == 2}"> <!-- Add thicker border for every 3 columns -->
+                        <td style="border-right: 2px solid black;"></td>
+                    </th:if>
+                </tr>
+                <th:if="${rowStat.index % 3 == 2}"> <!-- Add thicker border for every 3 rows -->
+                    <tr>
+                        <td colspan="9" style="border-bottom: 2px solid black;"></td>
+                    </tr>
+                </th:if>
+            </tbody>
+        </table>
+    </div>
+    
+    <form th:action="@{/solve}" method="post">
+		<textarea name="inputValues" rows="9" cols="21"></textarea>
+		<button type="submit">Solve</button>
+	</form>
+	
+</body>
+</html>
